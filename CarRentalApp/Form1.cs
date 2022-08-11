@@ -19,22 +19,56 @@ namespace CarRentalApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string customerName = tbCustomerName.Text;
-            string dateOut = dtpDateRented.Value.ToString();
-            string dateIn = dtpDateReturned.Value.ToString();
-            var carType = cbTypeOfCar.SelectedItem.ToString();
+            try
+            {
+                string customerName = tbCustomerName.Text;
+                var dateOut = dtpDateRented.Value;
+                var dateIn = dtpDateReturned.Value;
+                double cost = Convert.ToDouble(tbCost.Text);
+                var carType = cbTypeOfCar.Text;
+                var isValid = true;
+                var errorMessage = "";
 
-            //THIS IS MY ATTEMPT
-            //MessageBox.Show($"Thank you for renting: {tbCustomerName.Text}" +
-            //    $"\n Your pickup date for the car will be: {dtpDateRented.Text}" +
-            //    $"\n The return date for your car will be: {dtpDateReturned.Text}" +
-            //    $"\n The type of car you rented is: {cbTypeOfCar.Text}");
+                if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(carType))
+                {
+                    isValid = false;
+                    errorMessage += "Error: Please enter missing data.\n\r";
+                }
 
-            MessageBox.Show($"Customer Name: {customerName}\n\r" +
-                $"Dare Rented: {dateOut}\n\r" +
-                $"Date Returned: {dateIn}\n\r" +
-                $"Car Type: {carType}\n\r\n\r" +
-                $"THANK YOU");
+                if (dateOut > dateIn)
+                {
+                    isValid = false;
+                    errorMessage += "Error: Illegal date selection.\n\r";
+                }
+
+                if (cost == 0)
+                {
+                    isValid = false;
+                    errorMessage += "Error: Cost cannot be 0.\n\r";
+                }
+
+                //if(isValid == true) or
+                if (isValid)
+                {
+                    MessageBox.Show($"Customer Name: {customerName}\n\r" +
+                   $"Dare Rented: {dateOut}\n\r" +
+                   $"Date Returned: {dateIn}\n\r" +
+                   $"Cost: £{cost}\n\r" +
+                   $"Car Type: {carType}\n\r\n\r" +
+                   $"THANK YOU");
+                }
+                else
+                {
+                    MessageBox.Show(errorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                //throw;
+            }
+           
+           
         }
     }
 }
