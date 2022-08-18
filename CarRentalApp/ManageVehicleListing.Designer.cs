@@ -39,9 +39,9 @@
             // gvVehicleList
             // 
             this.gvVehicleList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvVehicleList.Location = new System.Drawing.Point(12, 89);
+            this.gvVehicleList.Location = new System.Drawing.Point(12, 60);
             this.gvVehicleList.Name = "gvVehicleList";
-            this.gvVehicleList.Size = new System.Drawing.Size(290, 349);
+            this.gvVehicleList.Size = new System.Drawing.Size(614, 349);
             this.gvVehicleList.TabIndex = 0;
             // 
             // label1
@@ -57,7 +57,7 @@
             // 
             // btnAddCar
             // 
-            this.btnAddCar.Location = new System.Drawing.Point(339, 92);
+            this.btnAddCar.Location = new System.Drawing.Point(20, 415);
             this.btnAddCar.Name = "btnAddCar";
             this.btnAddCar.Size = new System.Drawing.Size(116, 46);
             this.btnAddCar.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             // btnEditCar
             // 
-            this.btnEditCar.Location = new System.Drawing.Point(339, 144);
+            this.btnEditCar.Location = new System.Drawing.Point(142, 415);
             this.btnEditCar.Name = "btnEditCar";
             this.btnEditCar.Size = new System.Drawing.Size(116, 46);
             this.btnEditCar.TabIndex = 3;
@@ -77,7 +77,7 @@
             // 
             // btnDeleteCar
             // 
-            this.btnDeleteCar.Location = new System.Drawing.Point(339, 196);
+            this.btnDeleteCar.Location = new System.Drawing.Point(264, 415);
             this.btnDeleteCar.Name = "btnDeleteCar";
             this.btnDeleteCar.Size = new System.Drawing.Size(116, 46);
             this.btnDeleteCar.TabIndex = 4;
@@ -89,7 +89,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(638, 580);
             this.Controls.Add(this.btnDeleteCar);
             this.Controls.Add(this.btnEditCar);
             this.Controls.Add(this.btnAddCar);

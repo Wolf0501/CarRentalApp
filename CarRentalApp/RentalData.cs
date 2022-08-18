@@ -16,8 +16,8 @@ namespace CarRentalApp
     {
         public System.Guid RentalDataRef { get; set; }
         public string CustomerName { get; set; }
-        public System.DateTime DateRented { get; set; }
-        public System.DateTime DateReturned { get; set; }
+        public Nullable<System.DateTime> DateRented { get; set; }
+        public Nullable<System.DateTime> DateReturned { get; set; }
         public decimal Cost { get; set; }
         public System.Guid CarTypeRef { get; set; }
     

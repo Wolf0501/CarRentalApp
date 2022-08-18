@@ -21,7 +21,11 @@ namespace CarRentalApp
         }
     
         public System.Guid CarTypeRef { get; set; }
-        public string CarName { get; set; }
+        public string CarMake { get; set; }
+        public string CarModel { get; set; }
+        public string VIN { get; set; }
+        public string LicencePlateNumber { get; set; }
+        public Nullable<int> Year { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RentalData> RentalDatas { get; set; }
