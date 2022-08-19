@@ -35,27 +35,72 @@ namespace CarRentalApp
                     CarModel = q.CarModel,
                     VIN = q.VIN,
                     YEAR = q.Year,
-                    LicencePlateNumber = q.LicencePlateNumber
+                    LicencePlateNumber = q.LicencePlateNumber,
+                    q.CarTypeRef
                 })
                 .ToList();
             gvVehicleList.DataSource = cars;
+            gvVehicleList.Columns[4].HeaderText = "Licence Plate Number";
+            gvVehicleList.Columns[5].Visible = false;
             //gvVehicleList.Columns[0].HeaderText = "Referance";
             //gvVehicleList.Columns[1].HeaderText = "Name";
         }
 
         private void btnAddCar_Click(object sender, EventArgs e)
         {
-
+            var addEditVehicle = new AddEditVehicle();
+            addEditVehicle.MdiParent = this.MdiParent;
+            addEditVehicle.Show();
         }
 
         private void btnEditCar_Click(object sender, EventArgs e)
         {
+            // Get CarTypeRef of selected row
+            var carTypeRef = (Guid) gvVehicleList.SelectedRows[0].Cells["CarTypeRef"].Value;
 
+            // Query database for record
+            var car = _db.CarTypes.FirstOrDefault(q => q.CarTypeRef == carTypeRef);
+
+            // Launch AddEditVehicle window with Data
+            var addEditVehicle = new AddEditVehicle(car);
+            addEditVehicle.MdiParent = this.MdiParent;
+            addEditVehicle.Show();
         }
 
         private void btnDeleteCar_Click(object sender, EventArgs e)
         {
+            // Get CarTypeRef of selected row
+            var carTypeRef = (Guid)gvVehicleList.SelectedRows[0].Cells["CarTypeRef"].Value;
+            // Query database for record
+            var car = _db.CarTypes.FirstOrDefault(q => q.CarTypeRef == carTypeRef);
+            // Delete vehicle from table
+            _db.CarTypes.Remove(car);
+            _db.SaveChanges();
 
+            PopulateGrid();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            PopulateGrid();
+        }
+
+        public void PopulateGrid()
+        {
+            var cars = _db.CarTypes
+                .Select(q => new
+                {
+                    CarMake = q.CarMake,
+                    CarModel = q.CarModel,
+                    VIN = q.VIN,
+                    Year = q.Year,
+                    LicencePlateNumber = q.LicencePlateNumber,
+                    q.CarTypeRef
+                })
+                .ToList();
+            gvVehicleList.DataSource = cars;
+            gvVehicleList.Columns[4].HeaderText = "Licence Plate Number";
+            gvVehicleList.Columns["CarTypeRef"].Visible = false;
         }
     }
 }

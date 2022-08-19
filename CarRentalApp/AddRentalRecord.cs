@@ -64,7 +64,7 @@ namespace CarRentalApp
                     carRentalEntities.SaveChanges();
 
                     MessageBox.Show($"Customer Name: {customerName}\n\r" +
-                   $"Dare Rented: {dateOut}\n\r" +
+                   $"Date Rented: {dateOut}\n\r" +
                    $"Date Returned: {dateIn}\n\r" +
                    $"Cost: £{cost}\n\r" +
                    $"Car Type: {carType}\n\r\n\r" +
