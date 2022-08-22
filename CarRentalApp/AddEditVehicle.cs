@@ -18,6 +18,7 @@ namespace CarRentalApp
         {
             InitializeComponent();
             lblTitle.Text = "Add New Vehicle";
+            this.Text = "Add New Vehicle";
             isEditMode = false;
             _db = new CarRentalEntities();
         }
@@ -26,6 +27,7 @@ namespace CarRentalApp
         {
             InitializeComponent();
             lblTitle.Text = "Edit Vehicle";
+            this.Text = "Edit Vehicle";
             isEditMode = true;
             _db = new CarRentalEntities();
             PopulateFields(carToEdit);

@@ -1,6 +1,6 @@
 ﻿namespace CarRentalApp
 {
-    partial class AddRentalRecord
+    partial class AddEditRentalRecord
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.tbCustomerName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDateRented = new System.Windows.Forms.DateTimePicker();
@@ -40,18 +40,19 @@
             this.button1 = new System.Windows.Forms.Button();
             this.tbCost = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.lblRentalDataRef = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // lblTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Himalaya", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(142, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(283, 48);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Add Rental Record";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Himalaya", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(142, 9);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(283, 48);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Add Rental Record";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tbCustomerName
             // 
@@ -152,11 +153,21 @@
             this.label6.TabIndex = 11;
             this.label6.Text = "Cost";
             // 
-            // AddRentalRecord
+            // lblRentalDataRef
+            // 
+            this.lblRentalDataRef.AutoSize = true;
+            this.lblRentalDataRef.Location = new System.Drawing.Point(123, 323);
+            this.lblRentalDataRef.Name = "lblRentalDataRef";
+            this.lblRentalDataRef.Size = new System.Drawing.Size(0, 13);
+            this.lblRentalDataRef.TabIndex = 12;
+            this.lblRentalDataRef.Visible = false;
+            // 
+            // AddEditRentalRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(606, 389);
+            this.ClientSize = new System.Drawing.Size(606, 359);
+            this.Controls.Add(this.lblRentalDataRef);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbCost);
             this.Controls.Add(this.button1);
@@ -168,8 +179,8 @@
             this.Controls.Add(this.dtpDateRented);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbCustomerName);
-            this.Controls.Add(this.label1);
-            this.Name = "AddRentalRecord";
+            this.Controls.Add(this.lblTitle);
+            this.Name = "AddEditRentalRecord";
             this.Text = "Add Rental Record";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -179,7 +190,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TextBox tbCustomerName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpDateRented;
@@ -191,6 +202,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox tbCost;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblRentalDataRef;
     }
 }
 
