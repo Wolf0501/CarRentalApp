@@ -27,6 +27,14 @@
           <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CarTypeRef" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="LoginRef" />
+          </Key>
+          <Property Name="LoginRef" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <Association Name="FK_RentalData_RentalData">
           <End Role="CarType" Type="Self.CarType" Multiplicity="1" />
           <End Role="RentalData" Type="Self.RentalData" Multiplicity="*" />
@@ -42,6 +50,7 @@
         <EntityContainer Name="CarRentalModelStoreContainer">
           <EntitySet Name="CarType" EntityType="Self.CarType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RentalData" EntityType="Self.RentalData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RentalData_RentalData" Association="Self.FK_RentalData_RentalData">
             <End Role="CarType" EntitySet="CarType" />
             <End Role="RentalData" EntitySet="RentalData" />
@@ -58,6 +67,7 @@
             <End Role="CarType" EntitySet="CarTypes" />
             <End Role="RentalData" EntitySet="RentalDatas" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="CarRentalModel.User" />
         </EntityContainer>
         <EntityType Name="CarType">
           <Key>
@@ -95,6 +105,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="LoginRef" />
+          </Key>
+          <Property Name="LoginRef" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -122,6 +140,15 @@
                 <ScalarProperty Name="DateRented" ColumnName="DateRented" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="RentalDataRef" ColumnName="RentalDataRef" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CarRentalModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginRef" ColumnName="LoginRef" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

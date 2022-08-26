@@ -14,17 +14,19 @@ namespace CarRentalApp
     public partial class AddEditRentalRecord : Form
     {
         private bool isEditMode;
+        private ManageRentalRecords _manageRentalRecords;
         private readonly CarRentalEntities _db;
-        public AddEditRentalRecord()
+        public AddEditRentalRecord(ManageRentalRecords manageRentalRecords = null)
         {
             InitializeComponent();
             lblTitle.Text = "Add New Rental Record";
             this.Text = "Add New Rental Record";
             isEditMode = false;
             _db = new CarRentalEntities();
+            _manageRentalRecords = manageRentalRecords;
         }
 
-        public AddEditRentalRecord(RentalData recordToEdit)
+        public AddEditRentalRecord(RentalData recordToEdit, ManageRentalRecords manageRentalRecords = null)
         {
             InitializeComponent();
             lblTitle.Text = "Edit Rental Record";
@@ -37,8 +39,10 @@ namespace CarRentalApp
             else
             {
                 isEditMode = true;
+                _manageRentalRecords = manageRentalRecords;
                 _db = new CarRentalEntities();
                 PopulateFields(recordToEdit);
+                
             }
         }
 
@@ -51,7 +55,7 @@ namespace CarRentalApp
             lblRentalDataRef.Text = recordToEdit.RentalDataRef.ToString("D");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSubmit_Click(object sender, EventArgs e)
         {
             try
             {
@@ -62,7 +66,7 @@ namespace CarRentalApp
                 var carType = cbTypeOfCar.Text;
                 var isValid = true;
                 var errorMessage = "";
-
+                
                 if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(carType))
                 {
                     isValid = false;
@@ -86,7 +90,7 @@ namespace CarRentalApp
                 {
                     if (isEditMode)
                     {
-
+                        
                         var id = Guid.Parse(lblRentalDataRef.Text);
                         var rentalRecord = _db.RentalDatas.FirstOrDefault(q => q.RentalDataRef == id);
                         rentalRecord.CustomerName = customerName;
@@ -94,7 +98,6 @@ namespace CarRentalApp
                         rentalRecord.DateReturned = dateIn;
                         rentalRecord.Cost = (decimal)cost;
                         rentalRecord.CarTypeRef = (Guid)cbTypeOfCar.SelectedValue;
-                        _db.SaveChanges();
 
                         MessageBox.Show($"Customer Name: {customerName}\n\r" +
                         $"Date Rented: {dateOut}\n\r" +
@@ -114,7 +117,6 @@ namespace CarRentalApp
                         rentalRecord.CarTypeRef = (Guid)cbTypeOfCar.SelectedValue;
 
                         _db.RentalDatas.Add(rentalRecord);
-                        _db.SaveChanges();
 
                         MessageBox.Show($"Customer Name: {customerName}\n\r" +
                        $"Date Rented: {dateOut}\n\r" +
@@ -123,6 +125,8 @@ namespace CarRentalApp
                        $"Car Type: {carType}\n\r\n\r" +
                        $"THANK YOU");
                     }
+                    _db.SaveChanges();
+                    //_manageRentalRecords.PopulateRecordGrid(); //why is this not updating the grid?
                     Close();
                   
                 }

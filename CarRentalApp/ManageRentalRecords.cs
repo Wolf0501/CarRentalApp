@@ -26,17 +26,24 @@ namespace CarRentalApp
                 MdiParent = this.MdiParent
             };
             addRentalRecord.Show();
+            
         }
 
         private void btnEditRecord_Click(object sender, EventArgs e)
         {
-            Guid rentalDataRef = (Guid)gvRecordList.SelectedRows[0].Cells["RentalDataRef"].Value;
+            try
+            {
+                Guid rentalDataRef = (Guid)gvRecordList.SelectedRows[0].Cells["RentalDataRef"].Value;
+                var record = _db.RentalDatas.FirstOrDefault(q => q.RentalDataRef == rentalDataRef);
 
-            var record = _db.RentalDatas.FirstOrDefault(q => q.RentalDataRef == rentalDataRef);
-
-            var addEditRecord = new AddEditRentalRecord(record);
-            addEditRecord.MdiParent = this.MdiParent;
-            addEditRecord.Show();
+                var addEditRecord = new AddEditRentalRecord(record);
+                addEditRecord.MdiParent = this.MdiParent;
+                addEditRecord.Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please select a row");
+            }
         }
 
         private void btnDeleteRecord_Click(object sender, EventArgs e)
@@ -51,7 +58,7 @@ namespace CarRentalApp
                 _db.RentalDatas.Remove(record);
                 _db.SaveChanges();
 
-                PopulateGrid();
+                PopulateRecordGrid();
             }
             catch (Exception ex)
             {
@@ -64,7 +71,7 @@ namespace CarRentalApp
         {
             try
             {
-                PopulateGrid();
+                PopulateRecordGrid();
             }
             catch (Exception ex)
             {
@@ -72,9 +79,10 @@ namespace CarRentalApp
             }
         }
 
-        private void PopulateGrid()
+        public void PopulateRecordGrid()
         {
-            var records = _db.RentalDatas.Select(q => new
+            var records = _db.RentalDatas
+                .Select(q => new
             {
                 Customer = q.CustomerName,
                 DateOut = q.DateRented,
@@ -82,12 +90,18 @@ namespace CarRentalApp
                 q.RentalDataRef,
                 q.Cost,
                 Car = q.CarType.CarMake + " " + q.CarType.CarModel
-            }).ToList();
+            }
+                ).ToList();
 
             gvRecordList.DataSource = records;
             gvRecordList.Columns["DateIn"].HeaderText = "Date In";
             gvRecordList.Columns["DateOut"].HeaderText = "Date Out";
             gvRecordList.Columns["RentalDataRef"].Visible = false;
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            PopulateRecordGrid();
         }
     }
 }

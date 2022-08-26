@@ -48,36 +48,58 @@ namespace CarRentalApp
 
         private void btnAddCar_Click(object sender, EventArgs e)
         {
-            var addEditVehicle = new AddEditVehicle();
+            var addEditVehicle = new AddEditVehicle(this);
             addEditVehicle.MdiParent = this.MdiParent;
             addEditVehicle.Show();
         }
 
         private void btnEditCar_Click(object sender, EventArgs e)
         {
-            // Get CarTypeRef of selected row
-            var carTypeRef = (Guid) gvVehicleList.SelectedRows[0].Cells["CarTypeRef"].Value;
+            try
+            {
+                // Get CarTypeRef of selected row
+                var carTypeRef = (Guid)gvVehicleList.SelectedRows[0].Cells["CarTypeRef"].Value;
 
-            // Query database for record
-            var car = _db.CarTypes.FirstOrDefault(q => q.CarTypeRef == carTypeRef);
+                // Query database for record
+                var car = _db.CarTypes.FirstOrDefault(q => q.CarTypeRef == carTypeRef);
 
-            // Launch AddEditVehicle window with Data
-            var addEditVehicle = new AddEditVehicle(car);
-            addEditVehicle.MdiParent = this.MdiParent;
-            addEditVehicle.Show();
+                // Launch AddEditVehicle window with Data
+                var addEditVehicle = new AddEditVehicle(car, this);
+                addEditVehicle.MdiParent = this.MdiParent;
+                addEditVehicle.Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please select a row");
+            }
         }
 
         private void btnDeleteCar_Click(object sender, EventArgs e)
         {
-            // Get CarTypeRef of selected row
-            var carTypeRef = (Guid)gvVehicleList.SelectedRows[0].Cells["CarTypeRef"].Value;
-            // Query database for record
-            var car = _db.CarTypes.FirstOrDefault(q => q.CarTypeRef == carTypeRef);
-            // Delete vehicle from table
-            _db.CarTypes.Remove(car);
-            _db.SaveChanges();
+            try
+            {
+                // Get CarTypeRef of selected row
+                var carTypeRef = (Guid)gvVehicleList.SelectedRows[0].Cells["CarTypeRef"].Value;
+                // Query database for record
+                var car = _db.CarTypes.FirstOrDefault(q => q.CarTypeRef == carTypeRef);
 
-            PopulateGrid();
+                //confirm delete
+                DialogResult dr = MessageBox.Show("Are you sure you want to delete this record?",
+                    "Delete", MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Warning);
+
+                // Delete vehicle from table
+                if (dr == DialogResult.Yes)
+                {
+                    _db.CarTypes.Remove(car);
+                    _db.SaveChanges();
+                }
+                PopulateGrid();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please select a row");
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -98,6 +120,7 @@ namespace CarRentalApp
                     q.CarTypeRef
                 })
                 .ToList();
+
             gvVehicleList.DataSource = cars;
             gvVehicleList.Columns[4].HeaderText = "Licence Plate Number";
             gvVehicleList.Columns["CarTypeRef"].Visible = false;

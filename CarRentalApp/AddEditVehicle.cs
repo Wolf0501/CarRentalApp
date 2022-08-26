@@ -13,22 +13,25 @@ namespace CarRentalApp
     public partial class AddEditVehicle : Form
     {
         private bool isEditMode;
+        private ManageVehicleListing _manageVehicleListing;
         private readonly CarRentalEntities _db;
-        public AddEditVehicle()
+        public AddEditVehicle(ManageVehicleListing manageVehicleListing = null)
         {
             InitializeComponent();
             lblTitle.Text = "Add New Vehicle";
             this.Text = "Add New Vehicle";
             isEditMode = false;
             _db = new CarRentalEntities();
+            _manageVehicleListing = manageVehicleListing;
         }
 
-        public AddEditVehicle(CarType carToEdit)
+        public AddEditVehicle(CarType carToEdit, ManageVehicleListing manageVehicleListing = null)
         {
             InitializeComponent();
             lblTitle.Text = "Edit Vehicle";
             this.Text = "Edit Vehicle";
             isEditMode = true;
+            _manageVehicleListing = manageVehicleListing;
             _db = new CarRentalEntities();
             PopulateFields(carToEdit);
         }
@@ -55,10 +58,6 @@ namespace CarRentalApp
                 car.VIN = tbVIN.Text;
                 car.Year = int.Parse(tbYear.Text);
                 car.LicencePlateNumber = tbLicencePlateNumber.Text;
-
-                _db.SaveChanges();
-                MessageBox.Show($"{car.CarMake} {car.CarModel} has been editied");
-                Close();
             }
             else
             {
@@ -84,9 +83,6 @@ namespace CarRentalApp
                         };
 
                         _db.CarTypes.Add(newCar);
-                        _db.SaveChanges();
-                        MessageBox.Show($"{tbMake.Text} {tbModel.Text} has been added to the database");
-                        Close();
                     }
                 }
                 catch (Exception ex)
@@ -94,6 +90,10 @@ namespace CarRentalApp
                     MessageBox.Show($"{ex}");
                 }
             }
+            _db.SaveChanges();
+            _manageVehicleListing.PopulateGrid();
+            MessageBox.Show("Operation Completed");
+            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
