@@ -43,14 +43,16 @@ namespace CarRentalApp
 
                 var hashed_password = sBuilder.ToString();
 
-                var user = _db.Users.FirstOrDefault(q => q.UserName == username && q.Password == hashed_password);
+                var user = _db.Users.FirstOrDefault(q => q.UserName == username && q.Password == hashed_password && q.isActive == true);
                 if(user == null)
                 {
                     MessageBox.Show("Please provide valid credentials");
                 }
                 else
                 {
-                    var mainWindow = new MainWindow(this);
+                    var role = user.UserRoles.FirstOrDefault();
+                    var roleShortName = role.Role.ShortName;
+                    var mainWindow = new MainWindow(this, roleShortName);
                     mainWindow.Show();
                     Hide();
                 }
