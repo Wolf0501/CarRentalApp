@@ -8,9 +8,9 @@
         <EntityTypeShape EntityType="CarRentalModel.CarType" Width="2.125" PointX="1.25" PointY="1.125" />
         <EntityTypeShape EntityType="CarRentalModel.RentalData" Width="1.5" PointX="6.75" PointY="1.25" />
         <AssociationConnector Association="CarRentalModel.FK_RentalData_RentalData" />
-        <EntityTypeShape EntityType="CarRentalModel.Role" Width="1.5" PointX="5.25" PointY="7" />
-        <EntityTypeShape EntityType="CarRentalModel.UserRole" Width="1.5" PointX="7.25" PointY="4.375" />
-        <EntityTypeShape EntityType="CarRentalModel.User" Width="1.5" PointX="3.75" PointY="4.25" />
+        <EntityTypeShape EntityType="CarRentalModel.Role" Width="1.5" PointX="11.25" PointY="4.875" />
+        <EntityTypeShape EntityType="CarRentalModel.UserRole" Width="1.5" PointX="7" PointY="4.625" />
+        <EntityTypeShape EntityType="CarRentalModel.User" Width="1.5" PointX="2.125" PointY="4.5" />
         <AssociationConnector Association="CarRentalModel.FK_UserRoles_Roles" />
         <AssociationConnector Association="CarRentalModel.FK_UserRoles_Users" />
       </Diagram>

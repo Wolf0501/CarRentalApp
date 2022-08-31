@@ -52,7 +52,7 @@
             this.btnDeactivateUser.Name = "btnDeactivateUser";
             this.btnDeactivateUser.Size = new System.Drawing.Size(116, 46);
             this.btnDeactivateUser.TabIndex = 10;
-            this.btnDeactivateUser.Text = "Deactivate User";
+            this.btnDeactivateUser.Text = "Deactivate/Actvate User";
             this.btnDeactivateUser.UseVisualStyleBackColor = true;
             this.btnDeactivateUser.Click += new System.EventHandler(this.btnDeactivateUser_Click);
             // 

@@ -29,20 +29,9 @@ namespace CarRentalApp
                 var username = tbUsername.Text.Trim();
                 var password = tbPassword.Text;
 
-                // Convert the input string to a byte array and compute the hash
-                byte[] data = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var hashed_password = Utils.HashPassword(password);
 
-                // Create a new stringbuilder to collect the bytes
-                // and create a string
-                StringBuilder sBuilder = new StringBuilder();
-
-                for (int i = 0; i < data.Length; i++)
-                {
-                    sBuilder.Append(data[i].ToString("x2"));
-                }
-
-                var hashed_password = sBuilder.ToString();
-
+                // Check for matching username, password and active flag
                 var user = _db.Users.FirstOrDefault(q => q.UserName == username && q.Password == hashed_password && q.isActive == true);
                 if(user == null)
                 {
@@ -50,14 +39,12 @@ namespace CarRentalApp
                 }
                 else
                 {
-                    var role = user.UserRoles.FirstOrDefault();
-                    var roleShortName = role.Role.ShortName;
-                    var mainWindow = new MainWindow(this, roleShortName);
+                    var mainWindow = new MainWindow(this, user);
                     mainWindow.Show();
                     Hide();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Something went wrong please try again");
             }
