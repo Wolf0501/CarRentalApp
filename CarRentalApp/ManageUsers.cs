@@ -45,6 +45,7 @@ namespace CarRentalApp
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
+            PopulateUserGrid();
         }
 
         private void btnDeactivateUser_Click(object sender, EventArgs e)
@@ -52,7 +53,7 @@ namespace CarRentalApp
             try
             {
                 //get UsersRef of selected row
-                var usersRef = (Guid)gvUserList.SelectedRows[0].Cells["UsersRef"].Value;
+                var usersRef = (Guid)gvUserList.SelectedRows[0].Cells["UserRef"].Value;
 
                 //Query Database for record
                 var user = _db.Users.FirstOrDefault(q => q.UsersRef == usersRef);
@@ -71,11 +72,38 @@ namespace CarRentalApp
                 {
                     MessageBox.Show($"{user.UserName} is now deactivated.");
                 }
+                PopulateUserGrid();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
+        }
+
+        private void ManageUsers_Load(object sender, EventArgs e)
+        {
+            PopulateUserGrid();
+        }
+        public void PopulateUserGrid()
+        {
+                        var users = _db.Users.
+            Select(q => new
+            {
+                Name = q.UserName,
+                UserRef = q.UsersRef,
+                Password = q.Password,
+                isActive = q.isActive
+            }).ToList();
+
+            gvUserList.DataSource = users;
+            gvUserList.Columns["UserRef"].Visible = false;
+            gvUserList.Columns["Password"].Visible = false;
+            gvUserList.Columns["isActive"].HeaderText = "User Active";
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            PopulateUserGrid();
         }
     }
 }
