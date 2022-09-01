@@ -74,6 +74,14 @@ namespace CarRentalApp
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            if(_user.Password == Utils.DefaultHashPassword())
+            {
+                var resetPassword = new ResetPassword(_user);
+                resetPassword.ShowDialog();
+            }
+
+            var username = _user.UserName;
+            tsiLoginText.Text = $"Logged in as: {username}";
             if (_roleName != "admin")
             {
                 manageUsersToolStripMenuItem.Visible = false;
